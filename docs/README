@@ -1,0 +1,12 @@
+# To build the documentation, go to wikilife_ws's root directory, and run:
+
+  export PYTHONPATH=$PYTHONPATH:$PWD;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_utils;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_data;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_common_services;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_user_service;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_log_service;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_stat_service;
+  export PYTHONPATH=$PYTHONPATH:$PWD/../wikilife_question_service;
+  cd docs/
+  make html

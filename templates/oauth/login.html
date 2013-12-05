@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wikilife Autentication</title>
+<script type="text/javascript">
+    
+</script>
+
+<style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.error {
+	color: red;
+}
+
+div#everything {
+	text-align: center;
+	max-width: 400px;
+	margin: 0.5em auto;
+}
+
+div.center {
+	text-align: center;
+}
+
+div#form {
+	text-align: left;
+}
+
+label {
+	text-align: right;
+	display: inline-block;
+	width: 7em;
+	padding-right: 1em;
+}
+
+input {
+	max-width: 200px;
+}
+</style>
+</head>
+<body>
+	<div id="everything">
+		<img id="logo" src="https://wikilife.org/static/img/logo.png" alt="Wikilife Logo"> {%if error %}
+		<p class="error">Invalid username or pin</p>
+		{% end %}
+		<div id="form">
+			<form name="autentication" action="/oauth2/authorize" method="POST">
+				<label> Username:</label><input type="text" name="user_name">
+				<p>
+					<label>Pin:</label><input type="password" name="pin">
+				<div style="display: none">
+					<input type="hidden" name="response_type" value="{{response_type}}">
+					<p>
+						<input type="hidden" name="redirect_uri" value="{{redirect_uri}}">
+					<p>
+						<input type="hidden" name="client_id" value="{{client_id}}">
+				</div>
+				<p>
+				<div class="center">
+					<input type="submit" value="Authorize">
+				</div>
+				<div class="center">
+					To create a new account, visit the <a href="https://wikilife.org/register">registration page</a> on our
+					website.
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

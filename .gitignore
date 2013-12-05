@@ -37,3 +37,4 @@ nosetests.xml
 
 .settings
 *.log
+nohup.out

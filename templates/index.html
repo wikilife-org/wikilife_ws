@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <!-- script type="text/javascript">
+      google.load('visualization', '1', {'packages':['motionchart']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Fruit');
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'Sales');
+        data.addColumn('number', 'Expenses');
+        data.addColumn('string', 'Location');
+        data.addRows([
+          ['Apples',  new Date (1988,0,1), 1000, 300, 'East'],
+          ['Oranges', new Date (1988,0,1), 1150, 200, 'West'],
+          ['Bananas', new Date (1988,0,1), 300,  250, 'West'],
+          ['Apples',  new Date (1989,6,1), 1200, 400, 'East'],
+          ['Oranges', new Date (1989,6,1), 750,  150, 'West'],
+          ['Bananas', new Date (1989,6,1), 788,  617, 'West']
+        ]);
+        var chart = new google.visualization.MotionChart(document.getElementById('chart_div'));
+        chart.draw(data, {width: 900, height:500});
+      }
+    </script-->
+
+
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(init);
+	
+	function drawChart(service_url) {
+	    var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Date');
+	        data.addColumn('number', 'Count');
+	        data.addColumn('number', 'Sum');
+	        data.addColumn('number', 'Avg');
+	        items = [];
+	        
+	        $.getJSON(service_url, function(dato) {
+				  
+				 
+				  $.each(dato.data, function(key, val) {
+					  
+					  var t_list = [];
+					  t_list.push(val.date);
+					  t_list.push(parseFloat(val.count));
+					  t_list.push(parseFloat(val.sum));
+					  t_list.push(parseFloat(val.avg));
+					  items.push(t_list);
+
+				  });
+				  data.addRows(items);
+			        
+				    var options = {
+				      title: 'Wikilife Aggregation System'
+				    };
+				
+				    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				    chart.draw(data, options);
+				});
+	        
+	  };
+
+	  function init () {
+
+		    $('#saveForm').click(function(event){
+
+		        service_url = getStat();
+		    	drawChart(service_url);
+		        
+		        });
+		        
+		       
+		        
+		        return false;
+		    };
+
+		    
+	
+	function getStat(){
+		propId = document.getElementById('lifeVar').value;
+	
+		age = document.getElementById('age').value;
+		gender = document.getElementById('gender').value;
+		city = document.getElementById('city').value;
+		sleep = document.getElementById('sleep').value;
+		height = document.getElementById('height').value;
+		weight = document.getElementById('weight').value;
+		livingwith = document.getElementById('livingwith').value;
+		running = document.getElementById('running').value;
+		mood = document.getElementById('mood').value;
+		headache = document.getElementById('headache').value;
+			 
+		factors = "&age="+age+
+			"&gender="+gender+
+			"&location="+city+
+			"&sleep="+sleep+
+			"&height="+height+
+			"&weight="+weight+
+			"&livingwith="+livingwith+
+			"&running="+running+
+			"&mood="+mood+
+			"&headache="+headache; 
+		
+		baseUrl = document.getElementById('env').value;	
+		
+		serviceUrl = "http://"+baseUrl+"/3/stats/aggregation?loggable_id=.*&propperty_id="+propId+"&summary_id=0"+factors;
+		
+
+		return serviceUrl;
+	}
+
+</script>
+<title>
+Wikilife Aggregation System
+</title>
+
+<!-- Meta Tags -->
+<meta charset="utf-8">
+
+<!-- CSS -->
+<link href="/static/css/structure.css" rel="stylesheet">
+<link href="/static/css/form.css" rel="stylesheet">
+
+<!-- JavaScript -->
+<script src="/static/scripts/wufoo.js"></script>
+</head>
+
+<body id="public">
+<div id="container" class="ltr">
+
+<h1 id="logo">
+<a href="http://wikilife.org" title="Powered by Wikilife">Wikilife Aggregation System</a>
+</h1>
+
+<form id="statForm" name="form65" class="wufoo topLabel page" autocomplete="off" enctype="multipart/form-data" method="post" novalidate action="">
+
+<header id="header" class="info">
+<h2>Wikilife Aggregation System</h2>
+<div></div>
+</header>
+
+<ul>
+<li id="foli2" class="date notranslate rightHalf     ">
+<label class="desc" id="title2" for="Field2">From Date</label>
+<span>
+<input id="Field2-1" name="Field2-1" type="text" class="field text" value="" size="2" maxlength="2" tabindex="3" />
+<label for="Field2-1">MM</label>
+</span> 
+<span class="symbol">/</span>
+<span>
+<input id="Field2-2" name="Field2-2" type="text" class="field text" value="" size="2" maxlength="2" tabindex="4" />
+<label for="Field2-2">DD</label>
+</span>
+<span class="symbol">/</span>
+<span>
+ <input id="Field2" name="Field2" type="text" class="field text" value="" size="4" maxlength="4" tabindex="5" />
+<label for="Field2">YYYY</label>
+</span>
+<span id="cal2">
+<img id="pick2" class="datepicker" src="/static/images/calendar.png" alt="Pick a date." />
+</span>
+</li>
+<li id="foli2" class="date notranslate rightHalf     ">
+<label class="desc" id="title2" for="Field2">
+To Date
+</label>
+<span>
+<input id="Field2-1" name="Field2-1" type="text" class="field text" value="" size="2" maxlength="2" tabindex="3" />
+<label for="Field2-1">MM</label>
+</span> 
+<span class="symbol">/</span>
+<span>
+<input id="Field2-2" name="Field2-2" type="text" class="field text" value="" size="2" maxlength="2" tabindex="4" />
+<label for="Field2-2">DD</label>
+</span>
+<span class="symbol">/</span>
+<span>
+ <input id="Field2" name="Field2" type="text" class="field text" value="" size="4" maxlength="4" tabindex="5" />
+<label for="Field2">YYYY</label>
+</span>
+<span id="cal2">
+<img id="pick2" class="datepicker" src="/static/images/calendar.png" alt="Pick a date." />
+</span>
+</li>
+
+</ul>
+<div id="control">
+<fieldset>
+<label class="desc" id="title308" for="Field308">
+Environment
+</label>
+<div>
+<select id="env" name="Field308" class="field select medium" tabindex="38" > 
+	<option value="devapi.wikilife.org">DEV</option>
+	<option value="localhost:7080">LOCAL</option>
+	<option value="qaapi.wikilife.org">QA</option>
+	<option value="api.wikilife.org">PROD</option>
+</select>
+</div>
+</fieldset>
+<fieldset>
+<label class="desc" id="title308" for="Field308">
+Variable - Component
+</label>
+<div>
+<select id="lifeVar" name="Field308" class="field select medium" tabindex="38" > 
+	<option value="241560">Running - Distance</option>
+	<option value="241562">Sleep deep - Duration</option>
+	<option value="254002">Headache - Intensity</option>
+	<option value="2229">Water - Intensity</option>
+</select>
+</div>
+</fieldset>
+<fieldset>
+<label class="desc" id="title308" for="Field308">
+Summary
+</label>
+<div>
+<select id="summary" name="Field308" class="field select medium" tabindex="38" > 
+	<option id="summary">AVG/Day</option>
+</select>
+</div>
+</fieldset>
+
+</div>
+
+<fieldset>
+
+<legend id="title207" class="desc">Gender</legend>
+
+	<div>
+	<select id="gender" name="Field308" class="field select medium" tabindex="38"  size=2 > 
+		<option value="male">Male</option>
+		<option value="female">Female</option>
+	</select>
+	</div>
+</fieldset>
+
+<fieldset>
+
+<legend id="title7" class="desc">Age (yrs)</legend>
+<div>
+
+<select id="age" name="Field308" class="field select medium" tabindex="38"  size=10 > 
+	<option value="lt12">Less than 12</option>
+	<option value="12-15">12 to 15</option>
+	<option value="16-20">16 to 20</option>
+	<option value="21-25">21 to 25</option>
+	<option value="26-30">26 to 30</option>
+	<option value="31-35">31 to 35</option>
+	<option value="36-40">36 to 40</option>
+	<option value="41-50">41 to 50</option>
+	<option value="51-60">51 to 60</option>
+	<option value="gt60">Greater than 60</option>
+</select>
+
+</div>
+</fieldset>
+
+
+	<fieldset>
+	<legend id="title207" class="desc">Sleep (hrs)</legend>
+		<div>
+		
+		<select id="sleep" name="Field308" class="field select medium" tabindex="38"  size=10 > 
+			<option value="0-2">0 to 2</option>
+			<option value="2-3">2 to 3</option>
+			<option value="3-4">3 to 4</option>
+			<option value="4-5">4 to 5</option>
+			<option value="5-6">5 to 6</option>
+			<option value="6-7">6 to 7</option>
+			<option value="7-8">7 to 8</option>
+			<option value="8-9">8 to 9</option>
+			<option value="9-10">9 to 10</option>
+			<option value="gt10">Greater than 10</option>
+		</select>
+		
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Location</legend>
+		<div>
+
+			<select id="city" name="Field308" class="field select medium" tabindex="38"  size=10 > 
+				<option value="newyork">New York</option>
+				<option value="losangeles">Los Angeles</option>
+				<option value="boston">Boston</option>
+				<option value="boulder">Boulder</option>
+				<option value="sanfrancisco">San Francisco</option>
+				<option value="chicago">Chicago</option>
+				<option value="miami">Miami</option>
+				<option value="buenosaires">Buenos Aires</option>
+				<option value="paris">Paris</option>
+				<option value="london">London</option>
+			</select>
+		
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Height (cm)</legend>
+		<div>
+				<select id="height" name="Field308" class="field select medium" tabindex="38"  size=8 > 
+					<option value="lt100">Less than 100</option>
+					<option value="100-300">100 to 300</option>
+					<option value="131-150">131 to 150</option>
+					<option value="151-160">151 to 160</option>
+					<option value="161-170">161 to 170</option>
+					<option value="171-180">171 to 180</option>
+					<option value="181-190">181 to 190</option>
+					<option value="gt190">Greater than 190</option>
+				</select>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Weight (Kg)</legend>
+		<div>
+			<select id="weight" name="Field308" class="field select medium" tabindex="38"  size=10 > 
+				<option value="lt40">Less than 40</option>
+				<option value="40-50">40 to 50</option>
+				<option value="50-60">50 to 60</option>
+				<option value="60-70">60 to 70</option>
+				<option value="70-80">70 to 80</option>
+				<option value="80-90">80 to 90</option>
+				<option value="90-110">90 to 110</option>
+				<option value="110-130">110 to 130</option>
+				<option value="130-150">130 to 150</option>
+				<option value="gt150">Greater than 150</option>
+			</select>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Living with</legend>
+		<div>
+				<select id="livingwith" name="Field308" class="field select medium" tabindex="38"  size=9 > 
+					<option value="alone">Alone</option>
+					<option value="parents">Parents</option>
+					<option value="partner">Partner</option>
+					<option value="roomate">Roomate</option>
+					<option value="partner-and-kids">Partner and kids</option>
+					<option value="friends">Friends</option>
+					<option value="grandparents">Grandparents</option>
+					<option value="children">Children</option>
+					<option value="other-relatives">Other relative</option>
+				</select>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Running Distance (Km)</legend>
+		<div>
+				<select id="running" name="Field308" class="field select medium" tabindex="38"  size=8 > 
+					<option value="lt1">Less than 1</option>
+					<option value="1-5">1 to 5</option>
+					<option value="5-10">5 to 10</option>
+					<option value="10-15">10 to 15</option>
+					<option value="15-20">15 to 20</option>
+					<option value="20-25">20 to 25</option>
+					<option value="25-30">25 to 30</option>
+					<option value="gt30">Greater than 30</option>
+				</select>
+		</div>
+	</fieldset>
+
+	<fieldset>
+		<legend id="title207" class="desc">Mood (Level)</legend>
+		<div>
+			<select id="mood" name="Field308" class="field select medium" tabindex="38"  size=5 > 
+				<option value="lt3">Less than 3</option>
+				<option value="31-5">3.1 to 5.0</option>
+				<option value="51-7">5.1 to 7.0</option>
+				<option value="71-9">7.1 to 9.0</option>
+				<option value="91-10">9.1 to 10.0</option>
+			</select>
+		</div>
+	</fieldset>
+
+	<fieldset>
+	<legend id="title207" class="desc">Headache (Intensity)</legend>
+	<div>
+		<select id="headache" name="Field308" class="field select medium" tabindex="38"  size=5 > 
+			<option value="lt3">Less than 3</option>
+			<option value="31-5">3.1 to 5.0</option>
+			<option value="51-7">5.1 to 7.0</option>
+			<option value="71-9">7.1 to 9.0</option>
+			<option value="91-10">9.1 to 10.0</option>
+		</select>
+	</div>
+	</fieldset>
+
+<div>
+
+     <input id="saveForm" name="saveForm" class="btTxt submit" type="button" value="Submit"/>
+    </div>
+    
+<label class="desc" id="title4" for="Field4">
+Result
+</label>
+
+<div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+
+
+
+</form> 
+
+</div><!--container-->
+
+</body>
+</html>

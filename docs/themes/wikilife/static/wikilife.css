@@ -1,0 +1,274 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+@font-face {
+	font-family: 'FuturaLT';
+	src: url('fonts/FuturaLT.eot?#iefix') format('embedded-opentype'), url('fonts/FuturaLT.woff') format('woff'),
+		url('fonts/FuturaLT.ttf') format('truetype'), url('fonts/FuturaLT.svg#svgFontName') format('svg');
+}
+
+body,html {
+	margin: 0;
+	padding: 0;
+}
+
+h1,h2,h3,h4 {
+	font-family: 'FuturaLT', Sans-Serif;
+	color: #999999;
+	font-weight: normal;
+}
+
+h2 {
+	margin: 0;
+	background: #e6e6e6;
+	padding: 0.2em 0 0.2em 0.5em;
+	display: block;
+}
+
+h1 {
+	font-size: 1.5em;
+	display: none;
+}
+
+h1.maintitle {
+	display: block;
+}
+
+a {
+	text-decoration: none;
+}
+
+a.menuitem,.menuitem2 {
+	color: #999999;
+	line-height: 1.4em;
+	font-size: 0.8em;
+}
+
+a.menuitem2 {
+	padding-left: 1em;
+}
+
+h3 {
+	font-size: 1.7em !important;
+	color: #5d6475;
+	line-height: 0.9;
+	text-transform: uppercase;
+	text-shadow: gray 0 0 2px;
+	margin-top: 0;
+	margin-bottom: 0.4em !important;
+}
+
+hr {
+	display: block;
+	border: none;
+	height: 3px;
+	background-image: url('hr.png');
+	margin: 0 0 0 0;
+}
+
+div.main-container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+div#head {
+	height: 56px;
+	background-image: url("head-bg.png");
+	width: 100%;
+}
+
+div#logo {
+	float: left;
+}
+
+img#logo {
+	margin-top: 10px;
+}
+
+div#search {
+	float: right;
+}
+
+div#content {
+	margin-top: 3em;
+}
+
+div#login {
+	float: left;
+	margin: 0 1em;
+}
+
+div#register {
+	float: left;
+	margin: 0 1em;
+}
+
+label,p,li {
+	color: gray;
+	font-size: 0.8em;
+}
+
+label {
+	margin: 0.4em 0;
+}
+
+input {
+	font-family: 'Open Sans', sans-serif;
+}
+
+input[type="text"],input[type="password"] {
+	font-family: 'Open Sans', sans-serif;
+	height: 29px;
+	margin: 0px;
+	padding: 0px 8px;
+	background: none repeat scroll 0% 0% white;
+	border-right: 1px solid #D9D9D9;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #C0C0C0 #D9D9D9 #D9D9D9;
+	border-radius: 1px 1px 1px 1px;
+}
+
+input[type="text"]:hover,input[type="password"]:hover {
+	border-right: 1px solid rgb(185, 185, 185);
+	border-width: 1px;
+	border-style: solid;
+	border-color: #A0A0A0 #B9B9B9 #B9B9B9;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1) inset;
+}
+
+input[readonly="readonly"] {
+	background-color: #c0c0c0;
+}
+
+input[type="submit"] {
+	border: 1px solid #3079ED;
+	color: white;
+	text-shadow: 0px 1px rgba(0, 0, 0, 0.1);
+	background-color: #4D90FE;
+	border-radius: 3px;
+	height: 29px;
+	line-height: 29px;
+	vertical-align: bottom;
+	padding: 0px 8px;
+	margin-top: 0.4em;
+}
+
+input.delete {
+	border: 1px solid #BB4444;
+	background-color: red;
+	margin-left: 0.3em;
+	float: right;
+}
+
+div.application {
+	display: inline-block;
+	padding: 1em;
+	margin: 0.5em;
+	border: 1px dotted gray;
+	border-radius: 8px;
+	border: 1px dotted gray;
+}
+
+div.application input[type="text"] {
+	width: 256px;
+}
+
+div#applications {
+	margin-top: 1.5em;
+}
+
+button#login,button#register {
+	border: 0;
+	background: transparent;
+	width: 72px;
+	height: 20px;
+	margin-top: 0.5em;
+}
+
+#search {
+	display: inline-block;
+	border: 1px inset #ccc;
+	background: white;
+	border-radius: 5px;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 0.5em;
+	margin-top: 12px;
+}
+
+#search  img {
+	margin-top: -1px;
+	vertical-align: middle;
+}
+
+#search input {
+	border: none;
+	padding: 0;
+}
+
+#search button {
+	border: none;
+	background: none;
+}
+
+table#qnd-wrapper {
+	margin-bottom: 2em;
+	margin-top: -4px;
+	width: 100%;
+}
+
+table#qnd-wrapper td {
+	vertical-align: top;
+}
+
+td {
+	padding: 0;
+}
+
+td.menu {
+	width: 256px;
+	padding-top: 1em;
+	overflow: hidden;
+	font-size: 0.9em;
+}
+
+dl.class dt {
+	display: none;
+}
+
+span.magenta {
+	color: #ed1e79;
+	font-size: 1.1em;
+}
+
+label,p,td,div.footer,th {
+	font-family: Sans-Serif;
+}
+
+th {
+	font-size: 0.8em;
+}
+
+td,td {
+	color: gray;
+}
+
+div.footer {
+	color: #999999;
+	text-align: center;
+	padding-bottom: 1em;
+	font-size: 0.7em;
+}
+
+a {
+	color: #5892BB;
+}
+
+em {
+	font-style: normal;
+}
+
+tt.docutils.literal {
+	font-size: 1.5em;
+	color: #5892BB;
+}
