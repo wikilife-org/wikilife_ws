@@ -1,26 +1,21 @@
 # coding=utf-8
 
-from wikilife_biz.utils.biz_service_builder import BizServiceBuilder
-from wikilife_data.utils.dao_builder import DAOBuilder
-from wikilife_data.utils.db_conn import DBConn
-from wikilife_utils.settings.settings_loader import SettingsLoader
-from wikilife_ws.app import setup_app
-from wikilife_ws.utils.app_ctx import AppCTX
+from getopt import getopt, GetoptError
 import json
+import os
 import sys
 import tornado.httpserver
 import tornado.ioloop
 
+DEFAULT_ENV = 'local'
+DEFAULT_PORT = '7080'
+DEFAULT_LIBS_PATH = '..'
+
 
 def start_instance(settings):
-
-    app_ctx = AppCTX.get_instance()
-    app_ctx.settings = settings
-    app_ctx.logger = settings["LOGGER"]
-    app_ctx.service_builder = _create_service_builder(settings)
-
+    from wikilife_ws.app import setup_app
     http_server = tornado.httpserver.HTTPServer(
-        setup_app(settings["TORNADO"])
+        setup_app(settings)
         )
     http_server.listen(settings["TORNADO"]["port"])
 
@@ -48,21 +43,50 @@ def display_server_info(settings):
 
 
 def display_help():
-    print "Use: {environment=prod, qa, dev, local} runserver {port}"
+    usage = \
+"""Usage:
 
+  {filename} [runserver] [--env ENV] [--port PORT] [--libs LIBPATH]
+""" \
+.format(filename=sys.argv[0])
+    print(usage)
 
-def _create_service_builder(settings):
-    logger = settings["LOGGER"]
-    db_user = None
-    db_pass = None
-    db_conn = DBConn(settings["DB_SETTINGS"], db_user, db_pass)
-    dao_builder = DAOBuilder(logger, db_conn)
-    return BizServiceBuilder(settings, logger, dao_builder)
 
 if __name__ == "__main__":
-    env = str(sys.argv[1])
-    cmd = str(sys.argv[2])
-    port = str(sys.argv[3])
+
+    env = DEFAULT_ENV
+    port = DEFAULT_PORT
+    libs_path = DEFAULT_LIBS_PATH
+    cmd = sys.argv[1]
+
+    try:
+        opts, args = getopt(sys.argv[2:], '', ['port=', 'env=', 'libs='])
+    except GetoptError:
+        print("Invalid arguments.")
+        display_help()
+        sys.exit(1)
+
+    for opt, arg in opts:
+        if opt == '--port':
+            port = arg
+        elif opt == '--env':
+            env = arg
+        elif opt == '--libs':
+            libs_path = arg
+        else:
+            print("Superfluous argument: {}".format(opt))
+
+    if not cmd:
+        print("No command specified.")
+        display_help()
+        sys.exit(0)
+
+    sys.path.append(os.path.abspath(os.path.join(sys.argv[0], "../.."))) #export PYTHONPATH=$PYTHONPATH:$PWD;
+    sys.path.append(os.path.abspath(os.path.join(libs_path, "wikilife_utils")))
+    sys.path.append(os.path.abspath(os.path.join(libs_path, "wikilife_data")))
+    sys.path.append(os.path.abspath(os.path.join(libs_path, "wikilife_biz")))
+    
+    from wikilife_utils.settings.settings_loader import SettingsLoader
     settings = SettingsLoader().load_settings(env)
     settings["TORNADO"]["port"] = port
 

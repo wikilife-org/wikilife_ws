@@ -4,43 +4,24 @@ from wikilife_utils.parsers.json_parser import JSONParser
 from wikilife_ws.rest.base_handler import BaseHandler
 from wikilife_ws.utils.catch_exceptions import catch_exceptions
 from wikilife_ws.utils.oauth import userless, authenticated
-from wikilife_ws.utils.route import Route
 
 
-class BaseUsersHandler(BaseHandler):
-
-    _user_srv = None
-    _oauth_srv = None
-    _account_srv = None
-
-    def initialize(self):
-        super(BaseUsersHandler, self).initialize()
-        self._user_srv = self._service_builder.build_user_service()
-        self._oauth_srv = self._service_builder.build_oauth_service()
-        self._account_srv = self._service_builder.build_account_service()
-
-    def add_user_source(self, user, headers):
-        if not "source" in user:
-            user["source"] = self.get_source(headers)
-
-
-@Route("/4/user/check/")
-class UserNameCheckAvailabilityHandler(BaseUsersHandler):
+class UserNameCheckAvailabilityHandler(BaseHandler):
     """
     """
 
     @userless
     @catch_exceptions
     def get(self):
+        user_srv = self._services["user"]
         user_name = self.get_argument(name="name", strip=True)
         dto = {}
         dto["userName"] = user_name
-        dto["available"] = self._user_srv.is_username_available(user_name)
+        dto["available"] = user_srv.is_username_available(user_name)
         self.success(dto)
 
 
-@Route("/4/user/login/")
-class UserLoginHandler(BaseUsersHandler):
+class UserLoginHandler(BaseHandler):
 
     @userless
     @catch_exceptions
@@ -62,10 +43,11 @@ class UserLoginHandler(BaseUsersHandler):
             }
 
         """
+        oauth_srv = self._services["oauth"]
         user_credentials = JSONParser.to_collection(self.request.body)
         user_name = user_credentials["userName"]
         pin = user_credentials["pin"]
-        oauth_token = self._oauth_srv.login(user_name, pin)
+        oauth_token = oauth_srv.login(user_name, pin)
 
         if oauth_token != None:
             response = {"oauth_token": oauth_token}
@@ -75,8 +57,7 @@ class UserLoginHandler(BaseUsersHandler):
             self.error(status_code=401, user_message="Login failed")
 
 
-@Route("/4/user/name/")
-class EditUserNameHandler(BaseUsersHandler):
+class EditUserNameHandler(BaseHandler):
     """
     """
     
@@ -92,13 +73,13 @@ class EditUserNameHandler(BaseUsersHandler):
 
         Response::
         """
+        user_srv = self._services["user"]
         dto = JSONParser.to_collection(self.request.body)
-        self._user_srv.edit_user_name(user_id, dto["newUserName"])
+        user_srv.edit_user_name(user_id, dto["newUserName"])
         self.success(user_message="User name changed successfully")
 
 
-@Route("/4/user/pin/")
-class EditPinHandler(BaseUsersHandler):
+class EditPinHandler(BaseHandler):
     """
     """
 
@@ -114,15 +95,19 @@ class EditPinHandler(BaseUsersHandler):
 
         Response::
         """
+        user_srv = self._services["user"]
         dto = JSONParser.to_collection(self.request.body)
-        self._user_srv.edit_pin(user_id, dto["newPin"])
+        user_srv.edit_pin(user_id, dto["newPin"])
         self.success(user_message="User pin changed successfully")
 
 
-@Route("/4/user/account/")
-class UserAccountHandler(BaseUsersHandler):
+class UserAccountHandler(BaseHandler):
     """
     """
+
+    def add_user_source(self, user, headers):
+        if not "source" in user:
+            user["source"] = self.get_source(headers)
 
     @authenticated
     @catch_exceptions
@@ -177,7 +162,8 @@ class UserAccountHandler(BaseUsersHandler):
         }
 
         """
-        dto = self._account_srv.get_account(user_id)
+        account_srv = self._services["account"]
+        dto = account_srv.get_account(user_id)
         self.success(dto)
 
     @userless
@@ -205,9 +191,10 @@ class UserAccountHandler(BaseUsersHandler):
         Response::
 
         """
+        account_srv = self._services["account"]
         user_info = JSONParser.to_collection(self.request.body)
         self.add_user_source(user_info, self.request.headers)
-        self._account_srv.create_account(user_info)
+        account_srv.create_account(user_info)
         self.success()
 
 
@@ -215,10 +202,41 @@ class UserAccountHandler(BaseUsersHandler):
     @catch_exceptions
     def delete(self, user_id):
         """
-        Returns user account
+        Deletes user account
         """
-        self._account_srv.delete_account(user_id)
+        account_srv = self._services["account"]
+        account_srv.delete_account(user_id)
         self.success()
 
 
-routes = Route.get_routes()
+class UserProfileHandler(BaseHandler):
+    """
+    """
+
+    #@authenticated
+    @catch_exceptions
+    def get(self, user_id):
+        """
+        Returns user's profile.
+
+        Example::
+        {
+        "userId": "",
+        "items" : {
+            "gender": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "birthdate": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "height": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "weight": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "country": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "region": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")},
+            "city": {"nodeId": 0, "metricId": 0, value: "", "updateUTC": ISODate("")}
+            }
+        }
+
+        * *items* is an object containing several pairs of node ids and values.
+        Each node id refers to the value node within wikilife's graph that
+        models that particular value.  TODO: SEE META!
+        """
+        profile_srv = self._services["profile"]
+        profile = profile_srv.get_profile(user_id)
+        self.success(profile)

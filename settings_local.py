@@ -14,6 +14,7 @@ DB_SETTINGS_DEFAULT = {
     "port": 27017,
 }
 
+
 DB_SETTINGS["db_meta_live"]["uri"] = "http://localhost:7474/db/data/"
 
 DB_SETTINGS["db_location"]["port"] = 5432
@@ -23,6 +24,7 @@ DB_SETTINGS["db_location"]["pass"] = "123456"
 
 QUEUE_LOGS = {"host": "localhost", "port": 5672, "name": "log_queue"}
 QUEUE_OPERS = {"host": "localhost", "port": 5672, "name": "oper_queue"}
+
 
 DASNIA_SETTINGS["singly"] = {}
 DASNIA_SETTINGS["singly"]["client_id"] = "5b3bb1d1bfe7bcbbb5b68ca5f3d6958e"

@@ -1,22 +1,17 @@
 # coding=utf-8
 
 from os import path
-import datetime
 import logging
-import pytz
-
-
-RELEASE_DATETIME = datetime.datetime(2011, 12, 27, tzinfo=pytz.utc)
 
 #===================================
 #   LOGGING
 #===================================
 
 LOGGER = logging.getLogger('wikilife ws')
-hdlr = logging.FileHandler(path.join(path.dirname(__file__), "logs/wikilife_ws.log"))
+handler = logging.FileHandler(path.join(path.dirname(__file__), "logs/wikilife_ws.log"))
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-hdlr.setFormatter(formatter)
-LOGGER.addHandler(hdlr)
+handler.setFormatter(formatter)
+LOGGER.addHandler(handler)
 LOGGER.setLevel(logging.INFO)
 
 #===================================
@@ -24,7 +19,6 @@ LOGGER.setLevel(logging.INFO)
 #===================================
 
 TORNADO = dict(
-    port=6488,
     db_name="",
     db_uri="",
     db_user="",
@@ -36,6 +30,10 @@ TORNADO = dict(
     debug=False,
     debug_pdb=False,
 )
+
+#===================================
+#   DB 
+#===================================
 
 DB_SETTINGS = {
     "db_meta_live": {},

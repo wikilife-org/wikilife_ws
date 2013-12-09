@@ -4,17 +4,11 @@ from wikilife_utils.parsers.json_parser import JSONParser
 from wikilife_ws.rest.base_handler import BaseHandler
 from wikilife_ws.utils.catch_exceptions import catch_exceptions
 from wikilife_ws.utils.oauth import authenticated
-from wikilife_ws.utils.route import Route
 
 
-class BaseLogsHandler(BaseHandler):
-
-    _log_srv = None
-
-    def initialize(self):
-        super(BaseLogsHandler, self).initialize()
-        self._log_srv = self._service_builder.build_log_service()
-        self._gs_srv = self._service_builder.build_gs_service()
+class LogsHandler(BaseHandler):
+    """
+    """
 
     def add_log_source(self, logs, headers):
         source = self.get_source(headers)
@@ -33,12 +27,6 @@ class BaseLogsHandler(BaseHandler):
         
         return logs
 
-
-@Route("/4/logs")
-class LogCollectionHandler(BaseLogsHandler):
-    """
-    """
-
     @authenticated
     @catch_exceptions
     def post(self, user_id):
@@ -53,8 +41,9 @@ class LogCollectionHandler(BaseLogsHandler):
 
         Returns a list with the ids of the newly created log entries.
         """
+        log_srv = self._services["log"]
         logs = self.get_logs(self.request.body, user_id)
-        inserted_ids = self._log_srv.add_logs(logs)
+        inserted_ids = log_srv.add_logs(logs)
         self.success(inserted_ids)
 
     @authenticated
@@ -71,8 +60,9 @@ class LogCollectionHandler(BaseLogsHandler):
 
         Returns a list with the ids of the newly created log entries.
         """
+        log_srv = self._services["log"]
         logs = self.get_logs(self.request.body, user_id)
-        inserted_ids = self._log_srv.edit_logs(logs)
+        inserted_ids = log_srv.edit_logs(logs)
         self.success(inserted_ids)
 
     @authenticated
@@ -88,13 +78,13 @@ class LogCollectionHandler(BaseLogsHandler):
             ]
 
         """
+        log_srv = self._services["log"]
         logs = self.get_logs(self.request.body, user_id)
-        self._log_srv.delete_logs(logs)
+        log_srv.delete_logs(logs)
         self.success()
 
 
-@Route("/4/logs/latest")
-class LatestFinalLogsHandler(BaseLogsHandler):
+class LatestFinalLogsHandler(BaseHandler):
     """
     """
 
@@ -107,9 +97,7 @@ class LatestFinalLogsHandler(BaseLogsHandler):
         :param amount: Amount of logs to return. Defaults to 20.
 
         """
+        gs_srv = self._services["gs"]
         amount = self.get_argument("amount", 20)
-        latest_logs = self._gs_srv.get_latest_logs(amount)
+        latest_logs = gs_srv.get_latest_logs(amount)
         self.success(latest_logs)
-
-
-routes = Route.get_routes()

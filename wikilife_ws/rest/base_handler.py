@@ -3,7 +3,6 @@
 import tornado
 from tornado.web import RequestHandler
 from wikilife_utils.parsers.json_parser import JSONParser
-from wikilife_ws.utils.app_ctx import AppCTX
 
 
 class BaseHandler(RequestHandler):
@@ -11,13 +10,11 @@ class BaseHandler(RequestHandler):
     _logger = None
     _service_builder = None
 
-    def initialize(self):
-        #RequestHandler.initialize(self)
-        super(BaseHandler, self).initialize()
-        #TODO get this dependecies injected
-        app_ctx = AppCTX.get_instance()
-        self._logger = app_ctx.logger
-        self._service_builder = app_ctx.service_builder
+    def initialize(self, services):
+        RequestHandler.initialize(self)
+        #super(BaseHandler, self).initialize()
+        self._logger = self.settings['logger']
+        self._services = services
 
     def get_user_for_token(self, token):
         return self._service_builder.build_oauth_service().get_user_for_token(token)

@@ -3,17 +3,9 @@
 from wikilife_utils.date_utils import DateUtils
 from wikilife_utils.mail.simple_mail_sender import SinpleMailSender
 from wikilife_ws.rest.base_handler import BaseHandler
-from wikilife_ws.utils.route import Route
-
-class BaseInternalStatHandler(BaseHandler):
-
-    def initialize(self):
-        super(BaseInternalStatHandler, self).initialize()
-        self._stat_srv = self._service_builder.build_stat_service()
 
 
-@Route('/4/stats/internal')
-class InternalStatsHandler(BaseInternalStatHandler):
+class InternalStatsHandler(BaseHandler):
     """
     """
 
@@ -91,6 +83,3 @@ class InternalStatsHandler(BaseInternalStatHandler):
             
         body += "</table>"
         return body
-
-
-routes = Route.get_routes()
