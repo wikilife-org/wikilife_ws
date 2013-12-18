@@ -8,7 +8,6 @@ from wikilife_utils.parsers.json_parser import JSONParser
 class BaseHandler(RequestHandler):
 
     _logger = None
-    _service_builder = None
 
     def initialize(self, services):
         RequestHandler.initialize(self)
@@ -17,7 +16,7 @@ class BaseHandler(RequestHandler):
         self._services = services
 
     def get_user_for_token(self, token):
-        return self._service_builder.build_oauth_service().get_user_for_token(token)
+        return self._services["oauth"].get_user_for_token(token)
 
     def set_default_headers(self):
         self.set_header("Server", "WikilifeAPI tornado/{}".format(tornado.version))

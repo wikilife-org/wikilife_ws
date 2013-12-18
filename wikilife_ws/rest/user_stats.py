@@ -16,5 +16,5 @@ class HealthUserComplaintsRankingHandler(BaseHandler):
         params = {}
         params["user_id"] = user_id
 
-        r = stat_srv.get_stat_by_id(106, **params)
+        r = stat_srv.get_stat_by_id(105, **params)
         self.success(r)

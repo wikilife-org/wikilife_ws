@@ -13,7 +13,7 @@ class AggregationGlobalStatsHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         raw_params = self.get_str_params()
         params = {}
         params["node_id"] = int(raw_params["node_id"])
@@ -32,7 +32,7 @@ class ExerciseGlobalStatsHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         raw_params = self.get_str_params()
         params = {}
         params["node_id"] = int(raw_params["node_id"])
@@ -50,7 +50,7 @@ class SocialGlobalStatsHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(103)
         self.success(r)
 
@@ -62,7 +62,7 @@ class EducationGlobalStatsHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(101)
         self.success(r)
 
@@ -74,7 +74,7 @@ class WorkGlobalStatsHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(102)
         self.success(r)
 
@@ -86,6 +86,6 @@ class HealthGlobalComplaintsRankingHandler(BaseHandler):
     @userless
     @catch_exceptions
     def get(self):
-        stat_srv = self._service_builder["stat"]
+        stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(105)
         self.success(r)
