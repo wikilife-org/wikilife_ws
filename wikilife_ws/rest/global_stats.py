@@ -89,3 +89,15 @@ class HealthGlobalComplaintsRankingHandler(BaseHandler):
         stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(105)
         self.success(r)
+
+
+class HealthGlobalConditionsRankingHandler(BaseHandler):
+    """
+    """
+
+    @userless
+    @catch_exceptions
+    def get(self):
+        stat_srv = self._services["stat"]
+        r = stat_srv.get_stat_by_id(107)
+        self.success(r)

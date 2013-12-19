@@ -8,7 +8,7 @@ def authenticated(method):
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         user_id = self.get_user_for_token(self.get_argument('oauth_token'))
-        # TODO XXX: if user_id == None: throw 403
+        # TODO XXX: if user_id == None: throw 401
         return method(self, user_id=user_id, *args, **kwargs)
     return wrapper
 

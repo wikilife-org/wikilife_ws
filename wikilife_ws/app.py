@@ -7,13 +7,14 @@ from wikilife_ws.rest.dummy import V4DummyHandler, V4PostDummyHandler
 from wikilife_ws.rest.global_stats import AggregationGlobalStatsHandler, \
     ExerciseGlobalStatsHandler, SocialGlobalStatsHandler, \
     EducationGlobalStatsHandler, WorkGlobalStatsHandler, \
-    HealthGlobalComplaintsRankingHandler
+    HealthGlobalComplaintsRankingHandler, HealthGlobalConditionsRankingHandler
 from wikilife_ws.rest.internal_stats import InternalStatsHandler
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
     MetaNodeWithMetricsHandler, MetaNodeByOrigIdHandler, MetaNodeParentsHandler, \
     MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler
-from wikilife_ws.rest.user_stats import HealthUserComplaintsRankingHandler
+from wikilife_ws.rest.user_stats import HealthUserComplaintsRankingHandler,\
+    HealthUserConditionsRankingHandler
 from wikilife_ws.rest.users import UserNameCheckAvailabilityHandler, \
     UserLoginHandler, EditUserNameHandler, EditPinHandler, UserAccountHandler, \
     UserProfileHandler
@@ -80,9 +81,11 @@ def setup_app(settings):
     routes.append(('/4/stats/global/social/', SocialGlobalStatsHandler, {'services': services}))
     routes.append(('/4/stats/global/education/level/', EducationGlobalStatsHandler, {'services': services}))
     routes.append(('/4/stats/global/work/experience/', WorkGlobalStatsHandler, {'services': services}))
-    routes.append(('/4/stats/global/health/complaints/mostpopular/500', HealthGlobalComplaintsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/global/health/complaints/mostpopular', HealthGlobalComplaintsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/global/health/conditions/mostpopular', HealthGlobalConditionsRankingHandler, {'services': services}))
 
-    routes.append(('/4/stats/user/health/complaints/mostpopular/500', HealthUserComplaintsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/user/health/complaints/mostpopular', HealthUserComplaintsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/user/health/conditions/mostpopular', HealthUserConditionsRankingHandler, {'services': services}))
     
     routes.append(('/4/stats/internal', InternalStatsHandler, {'services': services}))
 
