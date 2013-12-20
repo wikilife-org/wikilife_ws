@@ -7,7 +7,8 @@ from wikilife_ws.rest.dummy import V4DummyHandler, V4PostDummyHandler
 from wikilife_ws.rest.global_stats import AggregationGlobalStatsHandler, \
     ExerciseGlobalStatsHandler, SocialGlobalStatsHandler, \
     EducationGlobalStatsHandler, WorkGlobalStatsHandler, \
-    HealthGlobalComplaintsRankingHandler, HealthGlobalConditionsRankingHandler
+    HealthGlobalComplaintsRankingHandler, HealthGlobalConditionsRankingHandler,\
+    PsychologicalGlobalMoodRankingHandler
 from wikilife_ws.rest.internal_stats import InternalStatsHandler
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
@@ -83,6 +84,7 @@ def setup_app(settings):
     routes.append(('/4/stats/global/work/experience/', WorkGlobalStatsHandler, {'services': services}))
     routes.append(('/4/stats/global/health/complaints/mostpopular', HealthGlobalComplaintsRankingHandler, {'services': services}))
     routes.append(('/4/stats/global/health/conditions/mostpopular', HealthGlobalConditionsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/global/psychological/moods/mostpopular', PsychologicalGlobalMoodRankingHandler, {'services': services}))
 
     routes.append(('/4/stats/user/health/complaints/mostpopular', HealthUserComplaintsRankingHandler, {'services': services}))
     routes.append(('/4/stats/user/health/conditions/mostpopular', HealthUserConditionsRankingHandler, {'services': services}))

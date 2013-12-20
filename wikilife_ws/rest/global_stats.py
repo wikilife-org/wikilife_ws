@@ -101,3 +101,14 @@ class HealthGlobalConditionsRankingHandler(BaseHandler):
         stat_srv = self._services["stat"]
         r = stat_srv.get_stat_by_id(107)
         self.success(r)
+
+class PsychologicalGlobalMoodRankingHandler(BaseHandler):
+    """
+    """
+
+    @userless
+    @catch_exceptions
+    def get(self):
+        stat_srv = self._services["stat"]
+        r = stat_srv.get_stat_by_id(109)
+        self.success(r)
