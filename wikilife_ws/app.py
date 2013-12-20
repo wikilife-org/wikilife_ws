@@ -15,7 +15,7 @@ from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
     MetaNodeWithMetricsHandler, MetaNodeByOrigIdHandler, MetaNodeParentsHandler, \
     MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler
 from wikilife_ws.rest.user_stats import HealthUserComplaintsRankingHandler,\
-    HealthUserConditionsRankingHandler
+    HealthUserConditionsRankingHandler, PsychologicalUserMoodRankingHandler
 from wikilife_ws.rest.users import UserNameCheckAvailabilityHandler, \
     UserLoginHandler, EditUserNameHandler, EditPinHandler, UserAccountHandler, \
     UserProfileHandler
@@ -88,6 +88,7 @@ def setup_app(settings):
 
     routes.append(('/4/stats/user/health/complaints/mostpopular', HealthUserComplaintsRankingHandler, {'services': services}))
     routes.append(('/4/stats/user/health/conditions/mostpopular', HealthUserConditionsRankingHandler, {'services': services}))
+    routes.append(('/4/stats/user/psychological/moods/mostpopular', PsychologicalUserMoodRankingHandler, {'services': services}))
     
     routes.append(('/4/stats/internal', InternalStatsHandler, {'services': services}))
 
