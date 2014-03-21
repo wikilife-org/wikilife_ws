@@ -8,7 +8,7 @@ from wikilife_ws.rest.global_stats import AggregationGlobalStatsHandler, \
     ExerciseGlobalStatsHandler, SocialGlobalStatsHandler, \
     EducationGlobalStatsHandler, WorkGlobalStatsHandler, \
     HealthGlobalComplaintsRankingHandler, HealthGlobalConditionsRankingHandler,\
-    PsychologicalGlobalMoodRankingHandler
+    PsychologicalGlobalMoodRankingHandler, AggregationGlobalStatsByDayHandler
 from wikilife_ws.rest.internal_stats import InternalStatsHandler
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
@@ -76,7 +76,7 @@ def setup_app(settings):
 
     #routes.append(('/4/was', GlobalWasHandler, {'services': services}))
     #routes.append(('/4/was/user', UserWasHandler, {'services': services}))
-
+    routes.append(('/4/stats/global/aggregation_by_day/', AggregationGlobalStatsByDayHandler, {'services': services}))
     routes.append(('/4/stats/global/aggregation/', AggregationGlobalStatsHandler, {'services': services}))
     routes.append(('/4/stats/global/exercise/times_per_week/avg', ExerciseGlobalStatsHandler, {'services': services}))
     routes.append(('/4/stats/global/social/', SocialGlobalStatsHandler, {'services': services}))

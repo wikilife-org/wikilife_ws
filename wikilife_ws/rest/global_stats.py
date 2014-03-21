@@ -25,6 +25,25 @@ class AggregationGlobalStatsHandler(BaseHandler):
         self.success(r)
 
 
+class AggregationGlobalStatsByDayHandler(BaseHandler):
+    """
+    """
+
+    @userless
+    @catch_exceptions
+    def get(self):
+        stat_srv = self._services["stat"]
+        raw_params = self.get_str_params()
+        params = {}
+        #params["node_id"] = int(raw_params["node_id"])
+        params["metric_id"] = int(raw_params["metric_id"])
+        params["from_date"] = DateParser.from_date(raw_params["from"])
+        params["to_date"] = DateParser.from_date(raw_params["to"])
+
+        r = stat_srv.get_stat_by_id(110, **params)
+        self.success(r)
+
+
 class ExerciseGlobalStatsHandler(BaseHandler):
     """
     """
