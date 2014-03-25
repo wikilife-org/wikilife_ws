@@ -58,7 +58,7 @@ class ExerciseGlobalStatsHandler(BaseHandler):
         params["from_date"] = DateParser.from_date(raw_params["from"])
         params["to_date"] = DateParser.from_date(raw_params["to"])
 
-        r = stat_srv.get_stat_by_id(100, **params)
+        r = stat_srv.get_stat_by_id(104, **params)
         self.success(r)
 
 
