@@ -9,7 +9,7 @@ from wikilife_ws.rest.global_stats import AggregationGlobalStatsHandler, \
     EducationGlobalStatsHandler, WorkGlobalStatsHandler, \
     HealthGlobalComplaintsRankingHandler, HealthGlobalConditionsRankingHandler,\
     PsychologicalGlobalMoodRankingHandler, AggregationGlobalStatsByDayHandler
-from wikilife_ws.rest.internal_stats import InternalStatsHandler
+from wikilife_ws.rest.internal_stats import InternalStatsHandler, InternalUserHandler
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
     MetaNodeWithMetricsHandler, MetaNodeByOrigIdHandler, MetaNodeParentsHandler, \
@@ -91,6 +91,8 @@ def setup_app(settings):
     routes.append(('/4/stats/user/psychological/moods/mostpopular', PsychologicalUserMoodRankingHandler, {'services': services}))
     
     routes.append(('/4/stats/internal', InternalStatsHandler, {'services': services}))
+    routes.append(('/4/user/internal', InternalUserHandler, {'services': services}))
+    
 
 
     settings["TORNADO"]['logger'] = settings["LOGGER"]
