@@ -91,5 +91,6 @@ class MetaMetricNone(BaseHandler):
     @catch_exceptions
     def get(self, metric_id):
         meta_srv = self._services["meta"]
-        node = meta_srv.get_metric_by_id(int(metric_id))
+        node = meta_srv.get_metric_by_orig_id(int(metric_id))
         self.success(node)
+        
