@@ -5,6 +5,13 @@ from wikilife_utils.mail.simple_mail_sender import SinpleMailSender
 from wikilife_ws.rest.base_handler import BaseHandler
 
 
+class InternalUserHandler(BaseHandler):
+    def get(self):
+
+        stat_srv = self._services["stat"]
+        r = stat_srv.get_stat_by_id(1001)
+        self.success(r)
+        
 class InternalStatsHandler(BaseHandler):
     """
     """

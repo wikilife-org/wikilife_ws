@@ -15,7 +15,7 @@ class BaseLocationHandler(BaseHandler):
         self._location_srv = self._service_builder.build_location_service()
 
 
-@Route("/3/location/search")
+#@Route("/3/location/search")
 class SearchHandler(BaseLocationHandler):
     """
     """
