@@ -13,7 +13,7 @@ from wikilife_ws.rest.internal_stats import InternalStatsHandler, InternalUserHa
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
     MetaNodeWithMetricsHandler, MetaNodeByOrigIdHandler, MetaNodeParentsHandler, \
-    MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler
+    MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler, MetaMetricNone
 from wikilife_ws.rest.user_stats import HealthUserComplaintsRankingHandler,\
     HealthUserConditionsRankingHandler, PsychologicalUserMoodRankingHandler
 from wikilife_ws.rest.users import UserNameCheckAvailabilityHandler, \
