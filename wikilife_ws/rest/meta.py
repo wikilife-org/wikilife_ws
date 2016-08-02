@@ -84,3 +84,12 @@ class MetaSearchHandler(BaseHandler):
         page_index = int(params.get("page", 0))
         node_list = meta_srv.find_nodes(name, page_index)
         self.success(node_list)
+
+
+class MetaMetricNone(BaseHandler):
+    
+    @catch_exceptions
+    def get(self, metric_id):
+        meta_srv = self._services["meta"]
+        node = meta_srv.get_metric_by_id(int(metric_id))
+        self.success(node)

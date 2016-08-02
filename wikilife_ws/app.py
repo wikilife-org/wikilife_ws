@@ -63,6 +63,7 @@ def setup_app(settings):
     routes.append(('/4/meta/ancestors/(?P<node_id>[-\w]+)', MetaNodeAncestorsHandler, {'services': services}))
     routes.append(('/4/meta/children/(?P<node_id>[-\w]+)', MetaNodeChildrenHandler, {'services': services}))
     routes.append(('/4/meta/search/', MetaSearchHandler, {'services': services}))
+    routes.append(('/4/meta/metric/(?P<metric_id>[-\w]+)', MetaMetricNone, {'services': services}))
     
     routes.append(('/4/logs/', LogsHandler, {'services': services}))
     #routes.append(('/4/logs/latest', LatestFinalLogsHandler, {'services': services}))
