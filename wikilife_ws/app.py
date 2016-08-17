@@ -13,7 +13,7 @@ from wikilife_ws.rest.internal_stats import InternalStatsHandler, InternalUserHa
 from wikilife_ws.rest.logs import LogsHandler, LatestFinalLogsHandler
 from wikilife_ws.rest.meta import MetaNodeByIdHandler, \
     MetaNodeWithMetricsHandler, MetaNodeByOrigIdHandler, MetaNodeParentsHandler, \
-    MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler, MetaMetricNone
+    MetaNodeAncestorsHandler, MetaNodeChildrenHandler, MetaSearchHandler, MetaMetricNone, MetaExactSearchHandler
 from wikilife_ws.rest.user_stats import HealthUserComplaintsRankingHandler,\
     HealthUserConditionsRankingHandler, PsychologicalUserMoodRankingHandler
 from wikilife_ws.rest.users import UserNameCheckAvailabilityHandler, \
@@ -63,6 +63,7 @@ def setup_app(settings):
     routes.append(('/4/meta/ancestors/(?P<node_id>[-\w]+)', MetaNodeAncestorsHandler, {'services': services}))
     routes.append(('/4/meta/children/(?P<node_id>[-\w]+)', MetaNodeChildrenHandler, {'services': services}))
     routes.append(('/4/meta/search/', MetaSearchHandler, {'services': services}))
+    routes.append(('/4/meta/exact/search/', MetaExactSearchHandler, {'services': services}))
     routes.append(('/4/meta/metric/(?P<metric_id>[-\w]+)', MetaMetricNone, {'services': services}))
     
     routes.append(('/4/logs/', LogsHandler, {'services': services}))

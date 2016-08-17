@@ -85,6 +85,19 @@ class MetaSearchHandler(BaseHandler):
         node_list = meta_srv.find_nodes(name, page_index)
         self.success(node_list)
 
+class MetaExactSearchHandler(BaseHandler):
+    """
+    """
+
+    @catch_exceptions
+    def get(self):
+        meta_srv = self._services["meta"]
+        params = self.get_str_params()
+        name = params["name"]
+        page_index = int(params.get("page", 0))
+        node_list = meta_srv.find_exact_nodes(name, page_index)
+        self.success(node_list)
+
 
 class MetaMetricNone(BaseHandler):
     
